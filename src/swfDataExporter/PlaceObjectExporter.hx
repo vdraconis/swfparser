@@ -2,9 +2,7 @@ package swfdataexporter;
 
 import flash.errors.Error;
 import swfdataexporter.SwfPackerTagExporter;
-
-import fastbytearray.ByteArrayUtils;
-import fastbytearray.Constants;
+import utils.ByteUtils;
 
 import flash.geom.Matrix;
 import flash.utils.ByteArray;
@@ -35,8 +33,8 @@ class PlaceObjectExporter extends SwfPackerTagExporter
             //scaleX = input.readFixedBits(scaleBits);
             //scaleY = input.readFixedBits(scaleBits);
             
-            scaleX = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-            scaleY = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
+            scaleX = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+            scaleY = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         }
         
         var rotateSkew0 : Float = 0;
@@ -49,16 +47,16 @@ class PlaceObjectExporter extends SwfPackerTagExporter
             //rotateSkew0 = input.readFixedBits(rotateBits);
             //rotateSkew1 = input.readFixedBits(rotateBits);
             
-            rotateSkew0 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-            rotateSkew1 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
+            rotateSkew0 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+            rotateSkew1 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         }  
 		
 		//var translateY:Number = input.readBits(translateBits);   
 		//var translateX:Number = input.readBits(translateBits);  
 		//var translateBits:uint = input.readBits(5);  
         
-        var translateX : Float = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        var translateY : Float = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
+        var translateX : Float = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        var translateY : Float = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         
         tagAsPlaceObject.setMatrix(scaleX, rotateSkew0, rotateSkew1, scaleY, translateX, translateY);
     }
@@ -69,8 +67,8 @@ class PlaceObjectExporter extends SwfPackerTagExporter
         var scaleY:Float = value.d;
         var rotateSkew0:Float = value.b;
         var rotateSkew1:Float = value.c;
-        var translateX:Int = Std.int(value.tx * Constants.FIXED_PRECISSION_VALUE);
-        var translateY:Int = Std.int(value.ty * Constants.FIXED_PRECISSION_VALUE);
+        var translateX:Int = Std.int(value.tx * ByteUtils.FIXED_PRECISSION_VALUE);
+        var translateY:Int = Std.int(value.ty * ByteUtils.FIXED_PRECISSION_VALUE);
         
         var hasScale : Bool = (scaleX != 1) || (scaleY != 1);
         var hasRotate : Bool = (rotateSkew0 != 0) || (rotateSkew1 != 0);
@@ -94,8 +92,8 @@ class PlaceObjectExporter extends SwfPackerTagExporter
             //output.writeFixedBits(scaleX, scaleBits);
             //output.writeFixedBits(scaleY, scaleBits);
             
-            output.writeInt(Std.int(scaleX * Constants.FIXED_PRECISSION_VALUE));
-            output.writeInt(Std.int(scaleY * Constants.FIXED_PRECISSION_VALUE));
+            output.writeInt(Std.int(scaleX * ByteUtils.FIXED_PRECISSION_VALUE));
+            output.writeInt(Std.int(scaleY * ByteUtils.FIXED_PRECISSION_VALUE));
         }  //output.writeBits(hasRotate ? 1 : 0, 1);  
         
         
@@ -110,8 +108,8 @@ class PlaceObjectExporter extends SwfPackerTagExporter
             //output.writeFixedBits(rotateSkew0, rotateBits);
             //output.writeFixedBits(rotateSkew1, rotateBits);
             
-            output.writeInt(Std.int(rotateSkew0 * Constants.FIXED_PRECISSION_VALUE));
-            output.writeInt(Std.int(rotateSkew1 * Constants.FIXED_PRECISSION_VALUE));
+            output.writeInt(Std.int(rotateSkew0 * ByteUtils.FIXED_PRECISSION_VALUE));
+            output.writeInt(Std.int(rotateSkew1 * ByteUtils.FIXED_PRECISSION_VALUE));
         }  
 		//output.end(false);    
 		//output.writeBits(translateY, translateBits);  
@@ -125,29 +123,29 @@ class PlaceObjectExporter extends SwfPackerTagExporter
     
     inline public function readColorMatrix(tag : SwfPackerTagPlaceObject, input : ByteArray) : Void
     {
-        tag.redColor0 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.redColor1 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.redColor2 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.redColor3 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.redColorOffset = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
+        tag.redColor0 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.redColor1 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.redColor2 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.redColor3 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.redColorOffset = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         
-        tag.greenColor0 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.greenColor1 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.greenColor2 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.greenColor3 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.greenColorOffset = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
+        tag.greenColor0 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.greenColor1 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.greenColor2 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.greenColor3 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.greenColorOffset = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         
-        tag.blueColor0 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.blueColor1 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.blueColor2 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.blueColor3 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.blueColorOffset = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
+        tag.blueColor0 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.blueColor1 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.blueColor2 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.blueColor3 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.blueColorOffset = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         
-        tag.alpha0 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.alpha1 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.alpha2 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.alpha3 = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-        tag.alphaOffset = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
+        tag.alpha0 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.alpha1 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.alpha2 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.alpha3 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        tag.alphaOffset = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
     }
     
     inline public function writeColorMatrix(tag : SwfPackerTagPlaceObject, output : ByteArray) : Void
@@ -161,29 +159,29 @@ class PlaceObjectExporter extends SwfPackerTagExporter
         var componentsMask : Int = 0;
         bitMask.mask = componentsMask;
         
-        output.writeInt(Std.int(tag.redColor0 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.redColor1 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.redColor2 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.redColor3 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.redColorOffset * Constants.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.redColor0 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.redColor1 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.redColor2 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.redColor3 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.redColorOffset * ByteUtils.FIXED_PRECISSION_VALUE));
         
-        output.writeInt(Std.int(tag.greenColor0 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.greenColor1 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.greenColor2 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.greenColor3 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.greenColorOffset * Constants.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.greenColor0 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.greenColor1 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.greenColor2 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.greenColor3 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.greenColorOffset * ByteUtils.FIXED_PRECISSION_VALUE));
         
-        output.writeInt(Std.int(tag.blueColor0 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.blueColor1 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.blueColor2 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.blueColor3 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.blueColorOffset * Constants.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.blueColor0 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.blueColor1 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.blueColor2 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.blueColor3 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.blueColorOffset * ByteUtils.FIXED_PRECISSION_VALUE));
         
-        output.writeInt(Std.int(tag.alpha0 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.alpha1 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.alpha2 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.alpha3 * Constants.FIXED_PRECISSION_VALUE));
-        output.writeInt(Std.int(tag.alphaOffset * Constants.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.alpha0 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.alpha1 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.alpha2 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.alpha3 * ByteUtils.FIXED_PRECISSION_VALUE));
+        output.writeInt(Std.int(tag.alphaOffset * ByteUtils.FIXED_PRECISSION_VALUE));
     }
     
     inline override public function exportTag(tag : SwfPackerTag, output : ByteArray) : Void

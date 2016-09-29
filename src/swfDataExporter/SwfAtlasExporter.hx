@@ -1,11 +1,10 @@
 package swfdataexporter;
 
 
-import fastbytearray.ByteArrayUtils;
-import fastbytearray.Constants;
 import openfl.display3D.Context3DTextureFormat;
 import swfdata.atlas.BitmapSubTexture;
 import swfdata.atlas.GLTextureAtlas;
+import utils.ByteUtils;
 
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
@@ -70,7 +69,7 @@ class SwfAtlasExporter
         //if (xmin < 0 || ymin < 0 || xmax < 0 || ymax < 0)
         //throw new Error("value range error: " + xmin + ", " + ymin + ", " + xmax + ", " + ymax);
         
-        var numBits : Int = ByteArrayUtils.calculateMaxBits4(true, xmin, xmax, ymin, ymax);
+        var numBits : Int = ByteUtils.calculateMaxBits4(true, xmin, xmax, ymin, ymax);
         
         //output.writeBits(numBits, 5);
         //output.writeBits(xmin, numBits);
@@ -98,8 +97,8 @@ class SwfAtlasExporter
         
         if (input.readUnsignedByte() == 1) 
         {
-            scaleX = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
-            scaleY = input.readInt() / Constants.FIXED_PRECISSION_VALUE;
+            scaleX = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+            scaleY = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         }  //var translateY:Number = input.readBits(translateBits);    //var translateX:Number = input.readBits(translateBits);    //var translateBits:uint = input.readBits(5);    //input.bitsReader.clear();  
 
         var translateX : Float = input.readInt();
@@ -141,8 +140,8 @@ class SwfAtlasExporter
 				output.writeFixedBits(scaleX, scaleBits);
 				output.writeFixedBits(scaleY, scaleBits);*/
             
-            output.writeInt(Std.int(scaleX * Constants.FIXED_PRECISSION_VALUE));
-            output.writeInt(Std.int(scaleY * Constants.FIXED_PRECISSION_VALUE));
+            output.writeInt(Std.int(scaleX * ByteUtils.FIXED_PRECISSION_VALUE));
+            output.writeInt(Std.int(scaleY * ByteUtils.FIXED_PRECISSION_VALUE));
         }  //output.writeBits(translateY, translateBits);    //output.writeBits(translateX, translateBits);    //output.writeBits(translateBits, 5);    //var translateBits:uint = ByteArrayUtils.calculateMaxBits(true, translateX, translateY);    //output.end(false);  
         
         output.writeInt(translateX);
