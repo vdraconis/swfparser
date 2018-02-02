@@ -14,19 +14,19 @@ import swfparser.tags.TagProcessorSymbolClassLight;
 
 class SwfParserLight implements ISWFDataParser
 {
-    public var context(get, set) : SwfParserContext;
+    public var context(get, set):SwfParserContext;
 
-    private var _context : SwfParserContext;
-    private var tagsProcessors : Dynamic;
-    private var isUseEndTag : Bool;
+    private var _context:SwfParserContext;
+    private var tagsProcessors:Dynamic;
+    private var isUseEndTag:Bool;
     
-    public function new(isUseEndTag : Bool = false)
+    public function new(isUseEndTag:Bool = false)
     {
         this.isUseEndTag = isUseEndTag;
         initialize();
     }
     
-    private function initialize() : Void
+    private function initialize():Void
     {
         context = new SwfParserContext();
         clear();
@@ -34,7 +34,7 @@ class SwfParserLight implements ISWFDataParser
         makeTagProcessorsMap();
     }
     
-    public function clear(callDestroy : Bool = true) : Void
+    public function clear(callDestroy:Bool = true):Void
     {
         if (context.library == null) 
             context.library = new SymbolsLibrary()
@@ -47,7 +47,7 @@ class SwfParserLight implements ISWFDataParser
         context.shapeLibrary.clear(callDestroy);
     }
     
-    private function makeTagProcessorsMap() : Void
+    private function makeTagProcessorsMap():Void
     {
         tagsProcessors = { };
         
@@ -59,7 +59,7 @@ class SwfParserLight implements ISWFDataParser
         var tagProcessorRemoveObject:TagProcessorRemoveObject = new TagProcessorRemoveObject(context);
         tagsProcessors[5] = tagProcessorRemoveObject;
         
-        var tagProcessorPlaceObject : TagProcessorPlaceObject = new TagProcessorPlaceObject(context);
+        var tagProcessorPlaceObject:TagProcessorPlaceObject = new TagProcessorPlaceObject(context);
         tagsProcessors[4] = tagProcessorPlaceObject;
         
         tagsProcessors[1] = new TagProcessorShowFrame(context);
@@ -67,7 +67,7 @@ class SwfParserLight implements ISWFDataParser
         tagsProcessors[76] = new TagProcessorSymbolClassLight(context);
     }
     
-    public function processDisplayObject(tags : Array<SwfPackerTag>) : Void
+    public function processDisplayObject(tags:Array<SwfPackerTag>):Void
     {
         for (i in 0...tags.length)
 		{
@@ -82,12 +82,12 @@ class SwfParserLight implements ISWFDataParser
         }
     }
     
-    private function get_context() : SwfParserContext
+    private function get_context():SwfParserContext
     {
         return _context;
     }
     
-    private function set_context(value : SwfParserContext) : SwfParserContext
+    private function set_context(value:SwfParserContext):SwfParserContext
     {
         _context = value;
         return value;

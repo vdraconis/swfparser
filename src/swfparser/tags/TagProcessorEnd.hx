@@ -9,12 +9,12 @@ class TagProcessorEnd extends TagProcessorBase
 {
     
     
-    public function new(context : SwfParserContext)
+    public function new(context:SwfParserContext)
     {
         super(context);
     }
     
-    override public function processTag(tag : SwfPackerTag) : Void
+    override public function processTag(tag:SwfPackerTag):Void
     {
         super.processTag(tag);
         

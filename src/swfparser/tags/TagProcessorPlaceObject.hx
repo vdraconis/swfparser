@@ -43,12 +43,12 @@ import swfparser.SwfParserContext;
 class TagProcessorPlaceObject extends TagProcessorBase
 {
     
-    public function new(context : SwfParserContext)
+    public function new(context:SwfParserContext)
     {
         super(context);
     }
     
-    private function getObject(id : Int, tag : SwfPackerTagPlaceObject, preveousTransform : Matrix) : DisplayObjectData
+    private function getObject(id:Int, tag:SwfPackerTagPlaceObject, preveousTransform:Matrix):DisplayObjectData
     {
         /**
 			 * Если в этом кадре ложатся несколько объектов с одинаковым айди но на разные глубины
@@ -56,9 +56,9 @@ class TagProcessorPlaceObject extends TagProcessorBase
 			 * в предидущих кадрах, и нужно ли их клонировать.
 			 */
         
-        var isNeedClone : Bool = tag.hasMatrix || tag.hasColorTransform;
+        var isNeedClone:Bool = tag.hasMatrix || tag.hasColorTransform;
         var placedDO:DisplayObjectData;
-        var depth : Int = tag.depth;
+        var depth:Int = tag.depth;
         
         var placedStorage:Map<Int, DisplayObjectData> = context.placedObjectsById[id];
         
@@ -95,7 +95,7 @@ class TagProcessorPlaceObject extends TagProcessorBase
         return placedDO;
     }
     
-    private function getObjectFromLibrary(id : Int, hasMatrix : Bool) : DisplayObjectData
+    private function getObjectFromLibrary(id:Int, hasMatrix:Bool):DisplayObjectData
     {
         var placedDO:DisplayObjectData = null;
         var prototype:DisplayObjectData;
@@ -122,7 +122,7 @@ class TagProcessorPlaceObject extends TagProcessorBase
         return placedDO;
     }
     
-    inline public function fillFromTag(currentDisplayObject : DisplayObjectData, tag : SwfPackerTagPlaceObject)
+    inline public function fillFromTag(currentDisplayObject:DisplayObjectData, tag:SwfPackerTagPlaceObject)
     {
         currentDisplayObject.depth = tag.depth;
         
@@ -137,7 +137,7 @@ class TagProcessorPlaceObject extends TagProcessorBase
         }
         else 
         {
-            var preveousFrameDO : DisplayObjectData = context.placeObjectsMap[tag.depth];
+            var preveousFrameDO:DisplayObjectData = context.placeObjectsMap[tag.depth];
             currentDisplayObject.setTransformMatrix(preveousFrameDO.transform);
         }
         
@@ -156,7 +156,7 @@ class TagProcessorPlaceObject extends TagProcessorBase
     {
         super.processTag(tag);
         
-        var tagPlaceObject : SwfPackerTagPlaceObject = cast tag;
+        var tagPlaceObject:SwfPackerTagPlaceObject = cast tag;
         var currentDisplayObject:SpriteData = cast displayObjectContext.currentDisplayObject;
         
         //trace('\tplace object', tag['constructor'], tagPlaceObject.placeMode, currentDisplayObject != null);
@@ -176,7 +176,7 @@ class TagProcessorPlaceObject extends TagProcessorBase
         var hasMatrix:Bool = tagPlaceObject.hasMatrix;
         //trace('place do', tagPlaceObject.placeMode, tagPlaceObject.characterId, hasMatrix);
         
-        var preveousFrameDO : DisplayObjectData;
+        var preveousFrameDO:DisplayObjectData;
         
         if (tagPlaceObject.placeMode == SwfPackerTagPlaceObject.PLACE_MODE_PLACE) 
         {

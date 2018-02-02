@@ -14,17 +14,17 @@ import utils.BitMask;
 
 class PlaceObjectExporter extends SwfPackerTagExporter
 {
-    private static var bitMask : BitMask = new BitMask();
+    private static var bitMask:BitMask = new BitMask();
     
     public function new()
     {
         super(ExporerTypes.PLACE_OBJECT);
     }
     
-	inline public function readMATRIX(input : ByteArray, tagAsPlaceObject : SwfPackerTagPlaceObject)
+	inline public function readMATRIX(input:ByteArray, tagAsPlaceObject:SwfPackerTagPlaceObject)
     {
-        var scaleX : Float = 1;
-        var scaleY : Float = 1;
+        var scaleX:Float = 1;
+        var scaleY:Float = 1;
         
         //if (input.readBits(1) == 1)
         if (input.readUnsignedByte() == 1) 
@@ -37,8 +37,8 @@ class PlaceObjectExporter extends SwfPackerTagExporter
             scaleY = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         }
         
-        var rotateSkew0 : Float = 0;
-        var rotateSkew1 : Float = 0;
+        var rotateSkew0:Float = 0;
+        var rotateSkew1:Float = 0;
         
         //if (input.readBits(1) == 1)
         if (input.readUnsignedByte() == 1) 
@@ -55,13 +55,13 @@ class PlaceObjectExporter extends SwfPackerTagExporter
 		//var translateX:Number = input.readBits(translateBits);  
 		//var translateBits:uint = input.readBits(5);  
         
-        var translateX : Float = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
-        var translateY : Float = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        var translateX:Float = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
+        var translateY:Float = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         
         tagAsPlaceObject.setMatrix(scaleX, rotateSkew0, rotateSkew1, scaleY, translateX, translateY);
     }
     
-    inline public function writeMATRIX(output : ByteArray, value : SwfPackerTagPlaceObject) : Void
+    inline public function writeMATRIX(output:ByteArray, value:SwfPackerTagPlaceObject):Void
     {
         var scaleX:Float = value.a;
         var scaleY:Float = value.d;
@@ -70,11 +70,11 @@ class PlaceObjectExporter extends SwfPackerTagExporter
         var translateX:Int = Std.int(value.tx * ByteUtils.FIXED_PRECISSION_VALUE);
         var translateY:Int = Std.int(value.ty * ByteUtils.FIXED_PRECISSION_VALUE);
         
-        var hasScale : Bool = (scaleX != 1) || (scaleY != 1);
-        var hasRotate : Bool = (rotateSkew0 != 0) || (rotateSkew1 != 0);
+        var hasScale:Bool = (scaleX != 1) || (scaleY != 1);
+        var hasRotate:Bool = (rotateSkew0 != 0) || (rotateSkew1 != 0);
         
-        //output.writeBits(hasScale ? 1 : 0, 1);
-        output[output.position++] = ((hasScale) ? 1 : 0);
+        //output.writeBits(hasScale ? 1:0, 1);
+        output[output.position++] = ((hasScale) ? 1:0);
         
         if (hasScale) 
         {
@@ -94,11 +94,11 @@ class PlaceObjectExporter extends SwfPackerTagExporter
             
             output.writeInt(Std.int(scaleX * ByteUtils.FIXED_PRECISSION_VALUE));
             output.writeInt(Std.int(scaleY * ByteUtils.FIXED_PRECISSION_VALUE));
-        }  //output.writeBits(hasRotate ? 1 : 0, 1);  
+        }  //output.writeBits(hasRotate ? 1:0, 1);  
         
         
         
-        output[output.position++] = ((hasRotate) ? 1 : 0);
+        output[output.position++] = ((hasRotate) ? 1:0);
         
         if (hasRotate) 
         {
@@ -121,7 +121,7 @@ class PlaceObjectExporter extends SwfPackerTagExporter
         output.writeInt(translateY);
     }
     
-    inline public function readColorMatrix(tag : SwfPackerTagPlaceObject, input : ByteArray) : Void
+    inline public function readColorMatrix(tag:SwfPackerTagPlaceObject, input:ByteArray):Void
     {
         tag.redColor0 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         tag.redColor1 = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
@@ -148,15 +148,15 @@ class PlaceObjectExporter extends SwfPackerTagExporter
         tag.alphaOffset = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
     }
     
-    inline public function writeColorMatrix(tag : SwfPackerTagPlaceObject, output : ByteArray) : Void
+    inline public function writeColorMatrix(tag:SwfPackerTagPlaceObject, output:ByteArray):Void
     {
         //trace(tag.instanceName, "write color matrix", tag.toColorMatrixString());
-        var hasOffset : Bool = tag.redColorOffset != 0 || tag.greenColorOffset != 0 || tag.blueColorOffset != 0 || tag.alphaOffset != 0;
-        var hasRed : Bool = tag.redColor0 != 0 || tag.redColor1 != 0 || tag.redColor2 != 0 || tag.redColor3 != 0;
-        var hasGreen : Bool = tag.greenColor0 != 0 || tag.greenColor1 != 0 || tag.greenColor2 != 0 || tag.greenColor3 != 0;
-        var hasBlue : Bool = tag.blueColor0 != 0 || tag.blueColor1 != 0 || tag.blueColor2 != 0 || tag.blueColor3 != 0;
+        var hasOffset:Bool = tag.redColorOffset != 0 || tag.greenColorOffset != 0 || tag.blueColorOffset != 0 || tag.alphaOffset != 0;
+        var hasRed:Bool = tag.redColor0 != 0 || tag.redColor1 != 0 || tag.redColor2 != 0 || tag.redColor3 != 0;
+        var hasGreen:Bool = tag.greenColor0 != 0 || tag.greenColor1 != 0 || tag.greenColor2 != 0 || tag.greenColor3 != 0;
+        var hasBlue:Bool = tag.blueColor0 != 0 || tag.blueColor1 != 0 || tag.blueColor2 != 0 || tag.blueColor3 != 0;
         
-        var componentsMask : Int = 0;
+        var componentsMask:Int = 0;
         bitMask.mask = componentsMask;
         
         output.writeInt(Std.int(tag.redColor0 * ByteUtils.FIXED_PRECISSION_VALUE));
@@ -184,11 +184,11 @@ class PlaceObjectExporter extends SwfPackerTagExporter
         output.writeInt(Std.int(tag.alphaOffset * ByteUtils.FIXED_PRECISSION_VALUE));
     }
     
-    inline override public function exportTag(tag : SwfPackerTag, output : ByteArray) : Void
+    inline override public function exportTag(tag:SwfPackerTag, output:ByteArray):Void
     {
         super.exportTag(tag, output);
         
-        var tagAsPlaceObject : SwfPackerTagPlaceObject = try cast(tag, SwfPackerTagPlaceObject) catch(e:Dynamic) null;
+        var tagAsPlaceObject:SwfPackerTagPlaceObject = try cast(tag, SwfPackerTagPlaceObject) catch(e:Dynamic) null;
         
         
         bitMask.mask = 0;
@@ -238,23 +238,23 @@ class PlaceObjectExporter extends SwfPackerTagExporter
         }  //output.end(false);  
     }
     
-    private var totalTime : Float = 0;
-    private var totalTime2 : Float = 0;
-    inline override public function importTag(tag : SwfPackerTag, input : ByteArray) : Void
+    private var totalTime:Float = 0;
+    private var totalTime2:Float = 0;
+    inline override public function importTag(tag:SwfPackerTag, input:ByteArray):Void
     {
-        var tagAsPlaceObject : SwfPackerTagPlaceObject = try cast(tag, SwfPackerTagPlaceObject) catch(e:Dynamic) null;
+        var tagAsPlaceObject:SwfPackerTagPlaceObject = try cast(tag, SwfPackerTagPlaceObject) catch(e:Dynamic) null;
         
         //var currentTime:Number = getTimer();
-        var mask : Int = input.readUnsignedByte();
+        var mask:Int = input.readUnsignedByte();
         bitMask.mask = mask;
         
-        var placeMode : Int = input.readUnsignedByte();
-        var depth : Int = input.readShort();
-        var hasClipDepth : Bool = bitMask.isBitSet(0);
-        var hasName : Bool = bitMask.isBitSet(1);
-        var hasMatrix : Bool = bitMask.isBitSet(2);
-        var hasCharacter : Bool = bitMask.isBitSet(3);
-        var hasColorTransform : Bool = bitMask.isBitSet(4);
+        var placeMode:Int = input.readUnsignedByte();
+        var depth:Int = input.readShort();
+        var hasClipDepth:Bool = bitMask.isBitSet(0);
+        var hasName:Bool = bitMask.isBitSet(1);
+        var hasMatrix:Bool = bitMask.isBitSet(2);
+        var hasCharacter:Bool = bitMask.isBitSet(3);
+        var hasColorTransform:Bool = bitMask.isBitSet(4);
         
         var instanceName:String = null;
         var clipDepth:Int = 0;

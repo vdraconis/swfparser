@@ -28,7 +28,7 @@ class PackerRectangle
     /**
 		 * @private
 		 */
-    private static var availableInstance : PackerRectangle;
+    private static var availableInstance:PackerRectangle;
     
     //--------------------------------------------------------------------------
     //
@@ -36,9 +36,9 @@ class PackerRectangle
     //
     //--------------------------------------------------------------------------
     
-    public static function get(x : Int, y : Int, width : Int, height : Int, id : Int = 0, bitmapData : BitmapData = null, originX : Int = 0, originY : Int = 0, pivotX : Float = 0, pivotY : Float = 0) : PackerRectangle
+    public static function get(x:Int, y:Int, width:Int, height:Int, id:Int = 0, bitmapData:BitmapData = null, originX:Int = 0, originY:Int = 0, pivotX:Float = 0, pivotY:Float = 0):PackerRectangle
     {
-        var instance : PackerRectangle = PackerRectangle.availableInstance;
+        var instance:PackerRectangle = PackerRectangle.availableInstance;
         
         if (instance != null) 
         {
@@ -80,42 +80,42 @@ class PackerRectangle
         super();
     }
     
-    public var next : PackerRectangle;
+    public var next:PackerRectangle;
     
-    public var previous : PackerRectangle;
+    public var previous:PackerRectangle;
     
-    public var nextInstance : PackerRectangle;
+    public var nextInstance:PackerRectangle;
     
-    public var scaleX : Float = 1;
-    public var scaleY : Float = 1;
+    public var scaleX:Float = 1;
+    public var scaleY:Float = 1;
     
-    public var x : Int = 0;
+    public var x:Int = 0;
     
-    public var y : Int = 0;
+    public var y:Int = 0;
     
-    public var width : Int = 0;
+    public var width:Int = 0;
     
-    public var height : Int = 0;
+    public var height:Int = 0;
     
-    public var right : Int = 0;
+    public var right:Int = 0;
     
-    public var bottom : Int = 0;
+    public var bottom:Int = 0;
     
-    public var id : Int;
+    public var id:Int;
     
-    public var bitmapData : BitmapData;
+    public var bitmapData:BitmapData;
     
-    public var originX : Int;
+    public var originX:Int;
     
-    public var originY : Int;
+    public var originY:Int;
     
-    public var pivotX : Float;
+    public var pivotX:Float;
     
-    public var pivotY : Float;
+    public var pivotY:Float;
     
-    public var padding : Int = 0;
+    public var padding:Int = 0;
     
-    private var disposed : Bool = false;
+    private var disposed:Bool = false;
     
     //--------------------------------------------------------------------------
     //
@@ -123,7 +123,7 @@ class PackerRectangle
     //
     //--------------------------------------------------------------------------
     
-    public function set(x : Int, y : Int, width : Int, height : Int) : Void{
+    public function set(x:Int, y:Int, width:Int, height:Int):Void{
         this.x = x;
         this.y = y;
         this.width = width;
@@ -132,7 +132,7 @@ class PackerRectangle
         this.bottom = y + height;
     }
     
-    public function dispose() : Void{
+    public function dispose():Void{
         this.next = null;
         this.previous = null;
         this.nextInstance = PackerRectangle.availableInstance;
@@ -145,7 +145,7 @@ class PackerRectangle
         disposed = true;
     }
     
-    public function setPadding(p_value : Int) : Void{
+    public function setPadding(p_value:Int):Void{
         this.x -= p_value - this.padding;
         this.y -= p_value - this.padding;
         this.width += (p_value - this.padding) * 2;
@@ -155,7 +155,7 @@ class PackerRectangle
         this.padding = p_value;
     }
     
-    public function getRect() : Rectangle{
+    public function getRect():Rectangle{
         return new Rectangle(this.x, this.y, this.width, this.height);
     }
 }

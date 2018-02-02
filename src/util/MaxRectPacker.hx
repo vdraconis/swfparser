@@ -25,21 +25,21 @@ class MaxRectPacker
     //
     //--------------------------------------------------------------------------
     
-    public static var BOTTOM_LEFT : Int = 0;
+    public static var BOTTOM_LEFT:Int = 0;
     
-    public static var SHORT_SIDE_FIT : Int = 1;
+    public static var SHORT_SIDE_FIT:Int = 1;
     
-    public static var LONG_SIDE_FIT : Int = 2;
+    public static var LONG_SIDE_FIT:Int = 2;
     
-    public static var AREA_FIT : Int = 3;
+    public static var AREA_FIT:Int = 3;
     
-    public static var SORT_NONE : Int = 0;
+    public static var SORT_NONE:Int = 0;
     
-    public static var SORT_ASCENDING : Int = 1;
+    public static var SORT_ASCENDING:Int = 1;
     
-    public static var SORT_DESCENDING : Int = 2;
+    public static var SORT_DESCENDING:Int = 2;
     
-    public static var nonValidTextureSizePrecision : Int = 5;
+    public static var nonValidTextureSizePrecision:Int = 5;
     
     //--------------------------------------------------------------------------
     //
@@ -47,7 +47,7 @@ class MaxRectPacker
     //
     //--------------------------------------------------------------------------
     
-    public function new(maxWidth : Int = 2048, maxHeight : Int = 2048, autoExpand : Bool = true, heuristics : Int = 0)
+    public function new(maxWidth:Int = 2048, maxHeight:Int = 2048, autoExpand:Bool = true, heuristics:Int = 0)
     {
         this._maxWidth = maxWidth;
         this._maxHeight = maxHeight;
@@ -66,62 +66,62 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private var _heuristics : Int = 0;
+    private var _heuristics:Int = 0;
     
     /**
 		 * @private
 		 */
-    private var _firstAvailableArea : PackerRectangle;
+    private var _firstAvailableArea:PackerRectangle;
     
     /**
 		 * @private
 		 */
-    private var _lastAvailableArea : PackerRectangle;
+    private var _lastAvailableArea:PackerRectangle;
     
     /**
 		 * @private
 		 */
-    private var _firstNewArea : PackerRectangle;
+    private var _firstNewArea:PackerRectangle;
     
     /**
 		 * @private
 		 */
-    private var _lastNewArea : PackerRectangle;
+    private var _lastNewArea:PackerRectangle;
     
     /**
 		 * @private
 		 */
-    private var _newBoundingArea : PackerRectangle;
+    private var _newBoundingArea:PackerRectangle;
     
     /**
 		 * @private
 		 */
-    private var _negativeArea : PackerRectangle;
+    private var _negativeArea:PackerRectangle;
     
     /**
 		 * @private
 		 */
-    private var _maxWidth : Int;
+    private var _maxWidth:Int;
     
     /**
 		 * @private
 		 */
-    private var _maxHeight : Int;
+    private var _maxHeight:Int;
     
     /**
 		 * @private
 		 */
-    private var _autoExpand : Bool = false;
+    private var _autoExpand:Bool = false;
     
     /**
 		 * @private
 		 */
-    private var _sortOnExpand : Int = 2;
+    private var _sortOnExpand:Int = 2;
     
     /**
 		 * @private
 		 */
-    private var _forceValidTextureSizeOnExpand : Bool = true;
+    private var _forceValidTextureSizeOnExpand:Bool = true;
     
     //--------------------------------------------------------------------------
     //
@@ -133,12 +133,12 @@ class MaxRectPacker
 		 * @private
 		 */
     
-    private var totalPacketRectangles : Int = 0;
-    public var atlasUsed : Int = 0;
-    public var atlasDatas : Array<AtlasRectanglesData>;  //atlas buffer  
+    private var totalPacketRectangles:Int = 0;
+    public var atlasUsed:Int = 0;
+    public var atlasDatas:Array<AtlasRectanglesData>;  //atlas buffer  
     
     
-    public function clearData() : Void
+    public function clearData():Void
     {
         totalPacketRectangles = 0;
         atlasUsed = 0;
@@ -201,37 +201,37 @@ class MaxRectPacker
     //	return success;
     //}
     
-    private var alreadyPackedMap : Dynamic;
+    private var alreadyPackedMap:Dynamic;
     
-    public function packRectangles(rectangles : Array<PackerRectangle>, padding : Int = 0, sort : Int = 2) : Bool
+    public function packRectangles(rectangles:Array<PackerRectangle>, padding:Int = 0, sort:Int = 2):Bool
     {
         
         if (sort != 0) 
-            rectangles.sort((((sort == 1)) ? this.sortOnHeightAscending : this.sortOnHeightDescending));
+            rectangles.sort((((sort == 1)) ? this.sortOnHeightAscending:this.sortOnHeightDescending));
         
         totalPacketRectangles = 0;
         atlasUsed = 0;
         
         while (rectangles.length > totalPacketRectangles)
         {
-            var count : Int = rectangles.length;
-            var success : Bool = true;
+            var count:Int = rectangles.length;
+            var success:Bool = true;
             
-            var failedRectangles : Array<PackerRectangle> = new Array<PackerRectangle>();
+            var failedRectangles:Array<PackerRectangle> = new Array<PackerRectangle>();
             
-            var currentAtlasData : AtlasRectanglesData = atlasDatas[atlasUsed];
+            var currentAtlasData:AtlasRectanglesData = atlasDatas[atlasUsed];
             atlasUsed++;
             
-            var _g : Int = 0;
+            var _g:Int = 0;
             while (_g < count)
             {
-                var i : Int = _g++;
-                var rect : PackerRectangle = rectangles[i];
+                var i:Int = _g++;
+                var rect:PackerRectangle = rectangles[i];
                 
                 if (alreadyPackedMap[rect.id] != null) 
                     continue;
                 
-                var s : Bool = this.addRectangle(rect, padding, currentAtlasData);
+                var s:Bool = this.addRectangle(rect, padding, currentAtlasData);
                 
                 if (!s && this._autoExpand) 
                     failedRectangles.push(rectangles[i]);
@@ -241,13 +241,13 @@ class MaxRectPacker
             
             if (!success && this._autoExpand) 
             {
-                var storedRectangles : Array<PackerRectangle> = currentAtlasData.rectangles.substring(0);
+                var storedRectangles:Array<PackerRectangle> = currentAtlasData.rectangles.substring(0);
                 storedRectangles = storedRectangles.concat(failedRectangles);
                 
                 if (this._sortOnExpand != 0) 
-                    storedRectangles.sort((((this._sortOnExpand == 1)) ? this.sortOnHeightAscending : this.sortOnHeightDescending));
+                    storedRectangles.sort((((this._sortOnExpand == 1)) ? this.sortOnHeightAscending:this.sortOnHeightDescending));
                 
-                var minimalArea : Int = this.getRectanglesArea(storedRectangles);
+                var minimalArea:Int = this.getRectanglesArea(storedRectangles);
                 
                 //смотрит площадь minimalArea и если она меньше уже заданной _width, _height расширает ее вплоть до maxWidth, maxHeight
                 do
@@ -299,7 +299,7 @@ class MaxRectPacker
                 success = currentAtlasData.width <= this._maxWidth && currentAtlasData.height <= this._maxHeight;
             }
             
-            var length : Int = currentAtlasData.rectangles.length;
+            var length:Int = currentAtlasData.rectangles.length;
             for (k in 0...length){
                 alreadyPackedMap[currentAtlasData.rectangles[k].id] = true;
             }
@@ -308,15 +308,15 @@ class MaxRectPacker
         return success;
     }
     
-    public function clear(atlasData : AtlasRectanglesData) : Void
+    public function clear(atlasData:AtlasRectanglesData):Void
     {
-        var rects : Int = atlasData.rectangles.length;
+        var rects:Int = atlasData.rectangles.length;
         
         atlasData.rectangles.length = 0;
         
         while (this._firstAvailableArea != null)
         {
-            var area : PackerRectangle = this._firstAvailableArea;
+            var area:PackerRectangle = this._firstAvailableArea;
             this._firstAvailableArea = area.next;
             area.dispose();
         }
@@ -325,34 +325,34 @@ class MaxRectPacker
         this._negativeArea = PackerRectangle.get(atlasData.width + 1, atlasData.height + 1, atlasData.width + 1, atlasData.height + 1);
     }
     
-    public function drawAtlas(atlasIndex : Int) : BitmapData
+    public function drawAtlas(atlasIndex:Int):BitmapData
     {
-        var currentAtlasData : AtlasRectanglesData = atlasDatas[atlasIndex];
+        var currentAtlasData:AtlasRectanglesData = atlasDatas[atlasIndex];
         
-        var w : Float = currentAtlasData.width;
-        var h : Float = currentAtlasData.height;
+        var w:Float = currentAtlasData.width;
+        var h:Float = currentAtlasData.height;
         
-        var atlasBitmap : BitmapData = new BitmapData(w, h, true, 0x0);
+        var atlasBitmap:BitmapData = new BitmapData(w, h, true, 0x0);
         
         draw(atlasBitmap, currentAtlasData);
         
         return atlasBitmap;
     }
     
-    private static var DRWAING_RECT : Rectangle = new Rectangle();
-    private static var DRAWING_POINT : Point = new Point();
+    private static var DRWAING_RECT:Rectangle = new Rectangle();
+    private static var DRAWING_POINT:Point = new Point();
     
-    private function draw(bitmapData : BitmapData, atlasData : AtlasRectanglesData) : Void
+    private function draw(bitmapData:BitmapData, atlasData:AtlasRectanglesData):Void
     {
-        var rectangles : Array<PackerRectangle> = atlasData.rectangles;
+        var rectangles:Array<PackerRectangle> = atlasData.rectangles;
         
-        var _g1 : Int = 0;
-        var _g : Int = rectangles.length;
+        var _g1:Int = 0;
+        var _g:Int = rectangles.length;
         
         while (_g1 < _g)
         {
-            var i : Int = _g1++;
-            var rect : PackerRectangle = rectangles[i];
+            var i:Int = _g1++;
+            var rect:PackerRectangle = rectangles[i];
             
             DRWAING_RECT.setTo(rect.originX, rect.originY, rect.width, rect.height);
             DRAWING_POINT.setTo(rect.x, rect.y);
@@ -370,9 +370,9 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function getRectanglesArea(rectangles : Array<PackerRectangle>) : Int{
-        var area : Int = 0;
-        var i : Int = rectangles.length - 1;
+    private function getRectanglesArea(rectangles:Array<PackerRectangle>):Int{
+        var area:Int = 0;
+        var i:Int = rectangles.length - 1;
         while (i >= 0){
             area += rectangles[i].width * rectangles[i].height;
             i--;
@@ -383,16 +383,16 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function addRectangles(rectangles : Array<PackerRectangle>, atlasData : AtlasRectanglesData, padding : Int = 0, force : Bool = true) : Bool
+    private function addRectangles(rectangles:Array<PackerRectangle>, atlasData:AtlasRectanglesData, padding:Int = 0, force:Bool = true):Bool
     {
-        var count : Int = rectangles.length;
-        var success : Bool = true;
+        var count:Int = rectangles.length;
+        var success:Bool = true;
         
-        var _g : Int = 0;
+        var _g:Int = 0;
         while (_g < count)
         {
-            var i : Int = _g++;
-            var rect : PackerRectangle = rectangles[i];
+            var i:Int = _g++;
+            var rect:PackerRectangle = rectangles[i];
             success = success && this.addRectangle(rect, padding, atlasData);
             
             if (!success && !force) 
@@ -405,9 +405,9 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function addRectangle(rect : PackerRectangle, padding : Int, atlasData : AtlasRectanglesData) : Bool
+    private function addRectangle(rect:PackerRectangle, padding:Int, atlasData:AtlasRectanglesData):Bool
     {
-        var area : PackerRectangle = this.getAvailableArea(rect.width + (padding - rect.padding) * 2, rect.height + (padding - rect.padding) * 2, atlasData);
+        var area:PackerRectangle = this.getAvailableArea(rect.width + (padding - rect.padding) * 2, rect.height + (padding - rect.padding) * 2, atlasData);
         
         if (area != null) 
         {
@@ -427,14 +427,14 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function createNewArea(x : Int, y : Int, width : Int, height : Int) : PackerRectangle
+    private function createNewArea(x:Int, y:Int, width:Int, height:Int):PackerRectangle
     {
-        var valid : Bool = true;
-        var area : PackerRectangle = this._firstNewArea;
+        var valid:Bool = true;
+        var area:PackerRectangle = this._firstNewArea;
         
         while (area != null)
         {
-            var next : PackerRectangle = area.next;
+            var next:PackerRectangle = area.next;
             
             if (!(area.x > x || area.y > y || area.right < x + width || area.bottom < y + height)) 
             {
@@ -483,14 +483,14 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function splitAvailableAreas(splitter : PackerRectangle) : Void{
-        var sx : Int = splitter.x;
-        var sy : Int = splitter.y;
-        var sright : Int = splitter.right;
-        var sbottom : Int = splitter.bottom;
-        var area : PackerRectangle = this._firstAvailableArea;
+    private function splitAvailableAreas(splitter:PackerRectangle):Void{
+        var sx:Int = splitter.x;
+        var sy:Int = splitter.y;
+        var sright:Int = splitter.right;
+        var sbottom:Int = splitter.bottom;
+        var area:PackerRectangle = this._firstAvailableArea;
         while (area != null){
-            var next : PackerRectangle = area.next;
+            var next:PackerRectangle = area.next;
             if (!(sx >= area.right || sright <= area.x || sy >= area.bottom || sbottom <= area.y)) {
                 if (sx > area.x)                     this.createNewArea(area.x, area.y, sx - area.x, area.height);
                 if (sright < area.right)                     this.createNewArea(sright, area.y, area.right - sright, area.height);
@@ -510,9 +510,9 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function pushNewAreas() : Void{
+    private function pushNewAreas():Void{
         while (this._firstNewArea != null){
-            var area : PackerRectangle = this._firstNewArea;
+            var area:PackerRectangle = this._firstNewArea;
             if (area.next != null) {
                 this._firstNewArea = area.next;
                 this._firstNewArea.previous = null;
@@ -538,14 +538,14 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function getAvailableArea(width : Int, height : Int, atlasData : AtlasRectanglesData) : PackerRectangle{
-        var available : PackerRectangle = this._negativeArea;
-        var index : Int = -1;
-        var area : PackerRectangle;
-        var w : Int;
-        var h : Int;
-        var m1 : Int;
-        var m2 : Int;
+    private function getAvailableArea(width:Int, height:Int, atlasData:AtlasRectanglesData):PackerRectangle{
+        var available:PackerRectangle = this._negativeArea;
+        var index:Int = -1;
+        var area:PackerRectangle;
+        var w:Int;
+        var h:Int;
+        var m1:Int;
+        var m2:Int;
         if (this._heuristics == 0) {
             area = this._firstAvailableArea;
             while (area != null){
@@ -599,8 +599,8 @@ class MaxRectPacker
             area = this._firstAvailableArea;
             while (area != null){
                 if (area.width >= width && area.height >= height) {
-                    var a1 : Int = area.width * area.height;
-                    var a2 : Int = available.width * available.height;
+                    var a1:Int = area.width * area.height;
+                    var a2:Int = available.width * available.height;
                     if (a1 < a2 || a1 == a2 && area.width < available.width)                         available = area;
                 }
                 area = area.next;
@@ -613,9 +613,9 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function sortOnAreaAscending(a : PackerRectangle, b : PackerRectangle) : Int{
-        var aa : Int = a.width * a.height;
-        var ba : Int = b.width * b.height;
+    private function sortOnAreaAscending(a:PackerRectangle, b:PackerRectangle):Int{
+        var aa:Int = a.width * a.height;
+        var ba:Int = b.width * b.height;
         if (aa < ba)             return -1
         else if (aa > ba)             return 1;
         return 1;
@@ -624,9 +624,9 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function sortOnAreaDescending(a : PackerRectangle, b : PackerRectangle) : Int{
-        var aa : Int = a.width * a.height;
-        var ba : Int = b.width * b.height;
+    private function sortOnAreaDescending(a:PackerRectangle, b:PackerRectangle):Int{
+        var aa:Int = a.width * a.height;
+        var ba:Int = b.width * b.height;
         if (aa > ba)             return -1
         else if (aa < ba)             return 1;
         
@@ -636,7 +636,7 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function sortOnHeightAscending(a : PackerRectangle, b : PackerRectangle) : Int{
+    private function sortOnHeightAscending(a:PackerRectangle, b:PackerRectangle):Int{
         if (a.height < b.height)             return -1
         else if (a.height > b.height)             return 1;
         
@@ -646,7 +646,7 @@ class MaxRectPacker
     /**
 		 * @private
 		 */
-    private function sortOnHeightDescending(a : PackerRectangle, b : PackerRectangle) : Int{
+    private function sortOnHeightDescending(a:PackerRectangle, b:PackerRectangle):Int{
         if (a.height > b.height)             return -1
         else if (a.height < b.height)             return 1;
         return 1;

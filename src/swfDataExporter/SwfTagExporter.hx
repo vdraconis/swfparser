@@ -19,25 +19,25 @@ import swfdataexporter.SwfPackerTagExporter;
 
 class SwfTagExporter
 {
-    private var exporters : Dynamic = { };
-    private var importers : Dynamic = { };
-    private var tagConstructorsObject : Dynamic = { };
+    private var exporters:Dynamic = { };
+    private var importers:Dynamic = { };
+    private var tagConstructorsObject:Dynamic = { };
     
     public function new()
     {
         initialize();
     }
     
-    public function exportTags(tags : Array<SwfPackerTag>, output : ByteArray) : Void
+    public function exportTags(tags:Array<SwfPackerTag>, output:ByteArray):Void
     {
-        var tagsCount : Int = tags.length;
+        var tagsCount:Int = tags.length;
         
         //trace("==========================", tagsCount);
         //trace(tags.join("\n"));
         //trace("==========================");
         
         for (i in 0...tagsCount){
-            var exporter : SwfPackerTagExporter = exporters[tags[i].type];
+            var exporter:SwfPackerTagExporter = exporters[tags[i].type];
             
             if (exporter != null) 
                 exporter.exportTag(tags[i], output)
@@ -48,13 +48,13 @@ class SwfTagExporter
         tags = null;
     }
     
-    public function importTags(tags : Array<SwfPackerTag>, input : ByteArray) : Void
+    public function importTags(tags:Array<SwfPackerTag>, input:ByteArray):Void
     {
         
-        var index : Int = 0;
+        var index:Int = 0;
         while (Std.int(input.position) != input.length)
         {
-            var tag : SwfPackerTag = importSingleTag(input);
+            var tag:SwfPackerTag = importSingleTag(input);
             
             if (tag == null) 
                 break;
@@ -63,7 +63,7 @@ class SwfTagExporter
         }
     }
     
-    public function importSingleTag(input : ByteArray) : SwfPackerTag
+    public function importSingleTag(input:ByteArray):SwfPackerTag
     {
         var tagType:Int = input.readUnsignedByte();
         
@@ -84,7 +84,7 @@ class SwfTagExporter
         return null;
     }
     
-    private function initialize() : Void
+    private function initialize():Void
     {
         importers[ExporerTypes.END] = exporters[0] = new SwfPackerTagExporter(ExporerTypes.END);
         importers[ExporerTypes.SHOW_FRAME] = exporters[1] = new SwfPackerTagExporter(ExporerTypes.SHOW_FRAME);

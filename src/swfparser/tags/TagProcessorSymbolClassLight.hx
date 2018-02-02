@@ -20,24 +20,24 @@ import swfparser.SwfParserContext;
 	 */
 class TagProcessorSymbolClassLight extends TagProcessorBase
 {
-    public function new(context : SwfParserContext)
+    public function new(context:SwfParserContext)
     {
         super(context);
     }
     
-    override public function processTag(tag : SwfPackerTag) : Void
+    override public function processTag(tag:SwfPackerTag):Void
     {
         super.processTag(tag);
         
-        var tagSymbolClass : SwfPackerTagSymbolClass = try cast(tag, SwfPackerTagSymbolClass) catch(e:Dynamic) null;
-        var symbolsLength : Int = tagSymbolClass.length;
+        var tagSymbolClass:SwfPackerTagSymbolClass = try cast(tag, SwfPackerTagSymbolClass) catch(e:Dynamic) null;
+        var symbolsLength:Int = tagSymbolClass.length;
         
         for (i in 0...symbolsLength)
 		{
-            var currentLinkage : String = tagSymbolClass.linkageList[i];
-            var currentCharacter : Int = tagSymbolClass.characterIdList[i];
+            var currentLinkage:String = tagSymbolClass.linkageList[i];
+            var currentCharacter:Int = tagSymbolClass.characterIdList[i];
             
-            var displayObject : DisplayObjectData = context.library.getDisplayObject(currentCharacter);
+            var displayObject:DisplayObjectData = context.library.getDisplayObject(currentCharacter);
             
             if (displayObject == null) 
             {

@@ -12,8 +12,8 @@ interface ISwfPackerTagExporter
 {
 
     
-    function exportTag(tag : SwfPackerTag, output : ByteArray) : Void;
+    function exportTag(tag:SwfPackerTag, output:ByteArray):Void;
     
-    function importTag(tag : SwfPackerTag, input : ByteArray) : Void;
+    function importTag(tag:SwfPackerTag, input:ByteArray):Void;
 }
 

@@ -4,18 +4,18 @@ import util.PackerRectangle;
 
 class AtlasRectanglesData
 {
-    public var atlasIndex : Int;
-    public var rectangles : Array<PackerRectangle> = new Array<PackerRectangle>();
+    public var atlasIndex:Int;
+    public var rectangles:Array<PackerRectangle> = new Array<PackerRectangle>();
     
-    public var width : Float = 1;
-    public var height : Float = 1;
+    public var width:Float = 1;
+    public var height:Float = 1;
     
-    public function new(atlasIndex : Int)
+    public function new(atlasIndex:Int)
     {
         this.atlasIndex = atlasIndex;
     }
     
-    public function clear() : Void
+    public function clear():Void
     {
         
         width = 1;
@@ -25,7 +25,7 @@ class AtlasRectanglesData
         clearRects();
     }
     
-    public function clearRects() : Void
+    public function clearRects():Void
     {
         //for (var i:int = 0; i < rectangles.length; i++)
         //{

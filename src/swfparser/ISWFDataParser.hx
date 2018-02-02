@@ -10,9 +10,9 @@ interface ISWFDataParser
     
     
     
-    var context(get, set) : SwfParserContext;
+    var context(get, set):SwfParserContext;
 
     
-    function processDisplayObject(tags : Array<SwfPackerTag>) : Void;
+    function processDisplayObject(tags:Array<SwfPackerTag>):Void;
 }
 

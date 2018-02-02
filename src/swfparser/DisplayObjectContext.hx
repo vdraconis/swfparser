@@ -12,10 +12,10 @@ import swfdata.SwfdataInner;
 
 class DisplayObjectContext
 {
-    public var currentDisplayObjectAsMovieClip : MovieClipData;
-    public var currentDisplayObject : SpriteData;
-    public var currentContainer : DisplayObjectContainer;
-    public var currentDisplayList : Array<DisplayObjectData>;
+    public var currentDisplayObjectAsMovieClip:MovieClipData;
+    public var currentDisplayObject:SpriteData;
+    public var currentContainer:DisplayObjectContainer;
+    public var currentDisplayList:Array<DisplayObjectData>;
     
     public function new()
     {
@@ -26,7 +26,7 @@ class DisplayObjectContext
     @:meta(Inline())
     @:final 
 	@:access(swfdata)
-	inline public function setCurrentDisplayObject(displayObject : SpriteData) : Void
+	inline public function setCurrentDisplayObject(displayObject:SpriteData):Void
     {
         currentDisplayObjectAsMovieClip = null;
         currentContainer = null;
@@ -52,7 +52,7 @@ class DisplayObjectContext
     @:meta(Inline())
     @:final
 	@:access(swfdata)
-	inline public function updateFrame() : Void
+	inline public function updateFrame():Void
     {
         currentContainer = currentDisplayObjectAsMovieClip._currentFrameData;
         currentDisplayList = currentContainer._displayObjects;
@@ -60,7 +60,7 @@ class DisplayObjectContext
     
     @:meta(Inline())
     @:final
-	inline public function nextFrame() : Void
+	inline public function nextFrame():Void
     {
         if (currentDisplayObjectAsMovieClip == null) 
             return;
@@ -69,7 +69,7 @@ class DisplayObjectContext
         updateFrame();
     }
     
-    public function clear() : Void
+    public function clear():Void
     {
         if (currentDisplayObject != null) 
             currentDisplayObject.destroy();

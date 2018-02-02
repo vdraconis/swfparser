@@ -25,26 +25,26 @@ import swfparser.SwfParserContext;
 class TagProcessorShowFrame extends TagProcessorBase
 {
     
-    public function new(context : SwfParserContext)
+    public function new(context:SwfParserContext)
     {
         super(context);
     }
     
 	@:access(swfdata)
-    override public function processTag(tag : SwfPackerTag) : Void
+    override public function processTag(tag:SwfPackerTag):Void
     {
-        var currentDisplayObject : SpriteData = displayObjectContext.currentDisplayObject;
+        var currentDisplayObject:SpriteData = displayObjectContext.currentDisplayObject;
         
         if (currentDisplayObject == null) 
             return;
         
         var tagShowFrame:SwfPackerTagShowFrame = cast tag;
         
-        var container : DisplayObjectContainer = displayObjectContext.currentContainer;
+        var container:DisplayObjectContainer = displayObjectContext.currentContainer;
         //trace('show frame', context.displayObjectContext.currentDisplayObjectAsMovieClip? context.displayObjectContext.currentDisplayObjectAsMovieClip.currentFrame:"");
         //if (container.displayObjectsCount > 0)
         //{
-        var currentDisplayList : Array<DisplayObjectData> = displayObjectContext.currentDisplayList;
+        var currentDisplayList:Array<DisplayObjectData> = displayObjectContext.currentDisplayList;
         var index:Int = container.displayObjectsPlacedCount;
         
         var placeObjectsMap:Map<Int, DisplayObjectData> = context.placeObjectsMap;
@@ -65,7 +65,7 @@ class TagProcessorShowFrame extends TagProcessorBase
         displayObjectContext.nextFrame();
     }
 	
-    inline public static function sortOnDepth(a : DisplayObjectData, b : DisplayObjectData) : Int
+    inline public static function sortOnDepth(a:DisplayObjectData, b:DisplayObjectData):Int
     {
         if (a.depth > b.depth) 
             return 1

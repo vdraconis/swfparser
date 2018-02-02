@@ -25,19 +25,19 @@ import swfparser.SwfParserContext;
 */
 class TagProcessorDefineSprite extends TagProcessorBase
 {
-    private var swfDataParser : ISWFDataParser;
+    private var swfDataParser:ISWFDataParser;
     
-    public static var spritesDefined : Int = 0;
+    public static var spritesDefined:Int = 0;
     
-    private static var defaultMatrix : Matrix = new Matrix();
+    private static var defaultMatrix:Matrix = new Matrix();
     
-    public function new(context : SwfParserContext, swfDataParser : ISWFDataParser)
+    public function new(context:SwfParserContext, swfDataParser:ISWFDataParser)
     {
         super(context);
         this.swfDataParser = swfDataParser;
     }
     
-    override public function processTag(tag : SwfPackerTag) : Void
+    override public function processTag(tag:SwfPackerTag):Void
     {
         super.processTag(tag);
         

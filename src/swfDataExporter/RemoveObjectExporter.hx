@@ -17,11 +17,11 @@ class RemoveObjectExporter extends SwfPackerTagExporter
         super(ExporerTypes.REMOVE_OBJECT);
     }
     
-    override public function exportTag(tag : SwfPackerTag, output : ByteArray) : Void
+    override public function exportTag(tag:SwfPackerTag, output:ByteArray):Void
     {
         super.exportTag(tag, output);
         
-        var tagAsRemoveObject : SwfPackerTagRemoveObject = try cast(tag, SwfPackerTagRemoveObject) catch(e:Dynamic) null;
+        var tagAsRemoveObject:SwfPackerTagRemoveObject = try cast(tag, SwfPackerTagRemoveObject) catch(e:Dynamic) null;
         
         if (tagAsRemoveObject.depth > 32767 || tagAsRemoveObject.depth < 0) 
             throw new Error("out of range");
@@ -30,11 +30,11 @@ class RemoveObjectExporter extends SwfPackerTagExporter
         output.writeShort(tagAsRemoveObject.characterId);
     }
     
-    override public function importTag(tag : SwfPackerTag, input : ByteArray) : Void
+    override public function importTag(tag:SwfPackerTag, input:ByteArray):Void
     {
         super.importTag(tag, input);
         
-        var tagAsRemoveObject : SwfPackerTagRemoveObject = try cast(tag, SwfPackerTagRemoveObject) catch(e:Dynamic) null;
+        var tagAsRemoveObject:SwfPackerTagRemoveObject = try cast(tag, SwfPackerTagRemoveObject) catch(e:Dynamic) null;
         
         tagAsRemoveObject.depth = input.readShort();
         tagAsRemoveObject.characterId = input.readShort();

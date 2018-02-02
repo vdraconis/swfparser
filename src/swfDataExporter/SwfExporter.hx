@@ -19,8 +19,8 @@ import swfdataexporter.SwfTagExporter;
 
 class SwfExporter
 {
-    private var atlasExporter : SwfAtlasExporter = new SwfAtlasExporter();
-    private var dataExporter : SwfTagExporter = new SwfTagExporter();
+    private var atlasExporter:SwfAtlasExporter = new SwfAtlasExporter();
+    private var dataExporter:SwfTagExporter = new SwfTagExporter();
     
     public function new()
     {
@@ -28,20 +28,20 @@ class SwfExporter
         
     }
     
-    public function clear() : Void
+    public function clear():Void
     {
         
         
     }
     
-    /*public function exportSwf(atlas : ITextureAtlas, shapesList : ShapeLibrary, tagsList : Array<SwfPackerTag>, output : ByteArray) : ByteArray
+    /*public function exportSwf(atlas:ITextureAtlas, shapesList:ShapeLibrary, tagsList:Array<SwfPackerTag>, output:ByteArray):ByteArray
     {
         output.begin();
         
         atlasExporter.exportAtlas(atlas, shapesList, output);
         //output.position = output.byteArray.position;
         trace("EXPORT POS", output.position);
-        var atlasPart : Int = output.position;
+        var atlasPart:Int = output.position;
         
         
         dataExporter.exportTags(tagsList, output);
@@ -60,13 +60,13 @@ class SwfExporter
         return output;
     }
     
-    public function importSwfGenome(name : String, input : ByteArray, shapesList : ShapeLibrary, tagsList : Array<SwfPackerTag>, format : String) : GenomeTextureAtlas
+    public function importSwfGenome(name:String, input:ByteArray, shapesList:ShapeLibrary, tagsList:Array<SwfPackerTag>, format:String):GenomeTextureAtlas
     {
         input.byteArray.inflate();
         
         input.begin();
         
-        var atlas : GenomeTextureAtlas = atlasExporter.importAtlasGenome(name, input, shapesList, format);
+        var atlas:GenomeTextureAtlas = atlasExporter.importAtlasGenome(name, input, shapesList, format);
         
         dataExporter.importTags(tagsList, input);
         
@@ -75,7 +75,7 @@ class SwfExporter
         return atlas;
     }*/
     
-    public function importSwfGL(input : ByteArray, shapesList : ShapeLibrary, tagsList : Array<SwfPackerTag>) : GLTextureAtlas
+    public function importSwfGL(input:ByteArray, shapesList:ShapeLibrary, tagsList:Array<SwfPackerTag>):GLTextureAtlas
 	{
 		
 		#if cpp
@@ -93,7 +93,7 @@ class SwfExporter
         return atlas;
 	}
 	
-    public function importSwf(input : ByteArray, shapesList : ShapeLibrary, tagsList : Array<SwfPackerTag>) : BitmapTextureAtlas
+    public function importSwf(input:ByteArray, shapesList:ShapeLibrary, tagsList:Array<SwfPackerTag>):BitmapTextureAtlas
     {
         input.inflate();
 		

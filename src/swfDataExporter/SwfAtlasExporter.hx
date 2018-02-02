@@ -1,6 +1,7 @@
 package swfdataexporter;
 
 
+import lime.graphics.PixelFormat;
 import openfl.display3D.Context3DTextureFormat;
 import swfdata.atlas.BitmapSubTexture;
 import swfdata.atlas.GLTextureAtlas;
@@ -20,9 +21,10 @@ import swfdata.atlas.GenomeTextureAtlas;
 
 import swfdata.atlas.TextureTransform;
 
+@:access(openfl.display)
 class SwfAtlasExporter
 {
-    private var bitmapBytes : ByteArray = new ByteArray();
+    private var bitmapBytes:ByteArray = new ByteArray();
     
     public function new()
     {
@@ -30,16 +32,16 @@ class SwfAtlasExporter
         
     }
     
-    public static function roundPixels20(pixels : Float) : Float{
+    public static function roundPixels20(pixels:Float):Float{
         return Math.round(pixels * 100) / 100;
     }
     
-    public function readRectangle(input : ByteArray) : Rectangle
+    public function readRectangle(input:ByteArray):Rectangle
     {
         //var bits:uint = input.readBits(5);
         
         
-        var rect : Rectangle = new Rectangle();
+        var rect:Rectangle = new Rectangle();
         
         //rect.x = (input.readBits(bits));
         //rect.width = (input.readBits(bits));
@@ -59,17 +61,17 @@ class SwfAtlasExporter
         return rect;
     }
     
-    public function writeRectangle(rectangle : Rectangle, output : ByteArray) : Void
+    public function writeRectangle(rectangle:Rectangle, output:ByteArray):Void
     {
-        var xmin : Int = Std.int(rectangle.x * 20);
-        var xmax : Int = Std.int(rectangle.width * 20);
-        var ymin : Int = Std.int(rectangle.y * 20);
-        var ymax : Int = Std.int(rectangle.height * 20);
+        var xmin:Int = Std.int(rectangle.x * 20);
+        var xmax:Int = Std.int(rectangle.width * 20);
+        var ymin:Int = Std.int(rectangle.y * 20);
+        var ymax:Int = Std.int(rectangle.height * 20);
         
         //if (xmin < 0 || ymin < 0 || xmax < 0 || ymax < 0)
         //throw new Error("value range error: " + xmin + ", " + ymin + ", " + xmax + ", " + ymax);
         
-        var numBits : Int = ByteUtils.calculateMaxBits4(true, xmin, xmax, ymin, ymax);
+        var numBits:Int = ByteUtils.calculateMaxBits4(true, xmin, xmax, ymin, ymax);
         
         //output.writeBits(numBits, 5);
         //output.writeBits(xmin, numBits);
@@ -83,10 +85,10 @@ class SwfAtlasExporter
         output.writeInt(ymax);
     }
     
-    public function readTextureTransform(input : ByteArray) : TextureTransform
+    public function readTextureTransform(input:ByteArray):TextureTransform
     {
-        var scaleX : Float = 1;
-        var scaleY : Float = 1;
+        var scaleX:Float = 1;
+        var scaleY:Float = 1;
         
         /*	if (input.readBits(1) == 1) 
 			{
@@ -101,26 +103,26 @@ class SwfAtlasExporter
             scaleY = input.readInt() / ByteUtils.FIXED_PRECISSION_VALUE;
         }  //var translateY:Number = input.readBits(translateBits);    //var translateX:Number = input.readBits(translateBits);    //var translateBits:uint = input.readBits(5);    //input.bitsReader.clear();  
 
-        var translateX : Float = input.readInt();
-        var translateY : Float = input.readInt();
+        var translateX:Float = input.readInt();
+        var translateY:Float = input.readInt();
         
         //trace('read transform', scaleX, scaleY, translateX / 2000, translateY / 2000);
         
         return new TextureTransform(scaleX, scaleY, translateX / 2000, translateY / 2000);
     }
     
-    public function writeTextureTransform(transform : TextureTransform, output : ByteArray) : Void
+    public function writeTextureTransform(transform:TextureTransform, output:ByteArray):Void
     {
-        var translateX : Int = Std.int(transform.tx * 2000);
-        var translateY : Int = Std.int(transform.ty * 2000);
+        var translateX:Int = Std.int(transform.tx * 2000);
+        var translateY:Int = Std.int(transform.ty * 2000);
         
-        var scaleX : Float = transform.scaleX;
-        var scaleY : Float = transform.scaleY;
+        var scaleX:Float = transform.scaleX;
+        var scaleY:Float = transform.scaleY;
         
-        var hasScale : Bool = (scaleX != 1) || (scaleY != 1);
+        var hasScale:Bool = (scaleX != 1) || (scaleY != 1);
         
-        //output.writeBits(hasScale ? 1 : 0, 1);
-        output.writeUnsignedInt((hasScale) ? 1 : 0);
+        //output.writeBits(hasScale ? 1:0, 1);
+        output.writeUnsignedInt((hasScale) ? 1:0);
         if (hasScale) 
         {
             /*var scaleBits:uint;
@@ -148,10 +150,10 @@ class SwfAtlasExporter
         output.writeInt(translateY);
     }
     
-    public function exportAtlas(atlas : BitmapTextureAtlas, shapesList : ShapeLibrary, output : ByteArray) : Void
+    public function exportAtlas(atlas:BitmapTextureAtlas, shapesList:ShapeLibrary, output:ByteArray):Void
     {
-        var bitmap : BitmapData = atlas.atlasData;
-        var bitmapBytes : ByteArray = bitmap.getPixels(bitmap.rect);
+        var bitmap:BitmapData = atlas.atlasData;
+        var bitmapBytes:ByteArray = bitmap.getPixels(bitmap.rect);
         
         if (bitmap.width < 2 || bitmap.height < 2) 
             Internal_trace.trace("Error: somethink wrong with atlas data");
@@ -184,10 +186,10 @@ class SwfAtlasExporter
 		
 		input.position = 0;
 		
-		var padding : Int = input.readUnsignedByte();
-		var bitmapSize : Int = input.readInt();
-		var width : Int = input.readShort();
-		var height : Int = input.readShort();
+		var padding:Int = input.readUnsignedByte();
+		var bitmapSize:Int = input.readInt();
+		var width:Int = input.readShort();
+		var height:Int = input.readShort();
 		
 		bitmapBytes.length = 0;
 		
@@ -197,20 +199,21 @@ class SwfAtlasExporter
 			trace("Error: somethink wrong with atlas data");
 			
 		var atlasData:BitmapData = new BitmapData(width, height, true, 0x0);
-		atlasData.setPixels(atlasData.rect, bitmapBytes);
+		
+		atlasData.image.setPixels (@:privateAccess atlasData.rect.__toLimeRectangle(), bitmapBytes, PixelFormat.BGRA32, bitmapBytes.endian);
 		
 		textureAtlas = new GLTextureAtlas(name, atlasData, Context3DTextureFormat.BGRA, padding);
 		
-		var texturesCount : Int = input.readShort();
+		var texturesCount:Int = input.readShort();
 		
-		var r : Rectangle = new Rectangle();
+		var r:Rectangle = new Rectangle();
 		for (i in 0...texturesCount)
 		{
-			var id : Int = input.readShort();
+			var id:Int = input.readShort();
 			
-			var textureTransform : TextureTransform = readTextureTransform(input);
-			var textureRegion : Rectangle = readRectangle(input);
-			var shapeBounds : Rectangle = readRectangle(input);
+			var textureTransform:TextureTransform = readTextureTransform(input);
+			var textureRegion:Rectangle = readRectangle(input);
+			var shapeBounds:Rectangle = readRectangle(input);
 			
 			//if (textureTransform.scaleX != 1 || textureTransform.scaleY != 1)
 			/*
@@ -240,14 +243,14 @@ class SwfAtlasExporter
 		return textureAtlas;
 	}
 	
-	public function importBitmapAtlas(name : String, input : ByteArray, shapesList : ShapeLibrary) : BitmapTextureAtlas
+	public function importBitmapAtlas(name:String, input:ByteArray, shapesList:ShapeLibrary):BitmapTextureAtlas
     {
-        var textureAtlas : BitmapTextureAtlas;
+        var textureAtlas:BitmapTextureAtlas;
         
-        var padding : Int = input.readUnsignedByte();
-        var bitmapSize : Int = input.readInt();
-        var width : Int = input.readShort();
-        var height : Int = input.readShort();
+        var padding:Int = input.readUnsignedByte();
+        var bitmapSize:Int = input.readInt();
+        var width:Int = input.readShort();
+        var height:Int = input.readShort();
         
         bitmapBytes.length = 0;
 		
@@ -263,17 +266,17 @@ class SwfAtlasExporter
         textureAtlas = new BitmapTextureAtlas(width, height, padding);
 		textureAtlas.atlasData.setPixels(textureAtlas.atlasData.rect, bitmapBytes);
         
-        var texturesCount : Int = input.readShort();
+        var texturesCount:Int = input.readShort();
         
         //trace('pre read', input.position);
         
-        var r : Rectangle = new Rectangle();
+        var r:Rectangle = new Rectangle();
         for (i in 0...texturesCount){
-            var id : Int = input.readShort();
+            var id:Int = input.readShort();
             
-            var textureTransform : TextureTransform = readTextureTransform(input);
-            var textureRegion : Rectangle = readRectangle(input);
-            var shapeBounds : Rectangle = readRectangle(input);
+            var textureTransform:TextureTransform = readTextureTransform(input);
+            var textureRegion:Rectangle = readRectangle(input);
+            var shapeBounds:Rectangle = readRectangle(input);
             
             //trace("read", input.position);
             
@@ -297,7 +300,7 @@ class SwfAtlasExporter
 				//}	
 				*/
             shapesList.addShape(/*null,*/ new ShapeData(id, shapeBounds));
-            var texture : BitmapSubTexture = new BitmapSubTexture(id, textureRegion, textureTransform);
+            var texture:BitmapSubTexture = new BitmapSubTexture(id, textureRegion, textureTransform);
             
             textureAtlas.putTexture(texture);
         }  //input.bitsReader.clear();  
@@ -306,14 +309,14 @@ class SwfAtlasExporter
     }
     
 	#if genome
-    public function importAtlasGenome(name : String, input : ByteArray, shapesList : ShapeLibrary, format : String) : GenomeTextureAtlas
+    public function importAtlasGenome(name:String, input:ByteArray, shapesList:ShapeLibrary, format:String):GenomeTextureAtlas
     {
-        var textureAtlas : GenomeTextureAtlas;
+        var textureAtlas:GenomeTextureAtlas;
         
-        var padding : Int = input.readUnsignedByte();
-        var bitmapSize : Int = input.readInt();
-        var width : Int = input.readShort();
-        var height : Int = input.readShort();
+        var padding:Int = input.readUnsignedByte();
+        var bitmapSize:Int = input.readInt();
+        var width:Int = input.readShort();
+        var height:Int = input.readShort();
         
         bitmapBytes.length = 0;
         
@@ -322,24 +325,24 @@ class SwfAtlasExporter
         if (width < 2 || height < 2) 
             Internal_trace("Error: somethink wrong with atlas data");
         
-        var bitmapData : BitmapData = new BitmapData(width, height, true);
+        var bitmapData:BitmapData = new BitmapData(width, height, true);
         bitmapData.setPixels(bitmapData.rect, bitmapBytes);
         
         //WindowUtil.openWindowToReview(bitmapData);
         
         textureAtlas = new GenomeTextureAtlas(name, bitmapData, format, padding);
         
-        var texturesCount : Int = input.readShort();
+        var texturesCount:Int = input.readShort();
         
         //trace('pre read', input.position);
         
-        var r : Rectangle = new Rectangle();
+        var r:Rectangle = new Rectangle();
         for (i in 0...texturesCount){
-            var id : Int = input.readShort();
+            var id:Int = input.readShort();
             
-            var textureTransform : TextureTransform = readTextureTransform(input);
-            var textureRegion : Rectangle = readRectangle(input);
-            var shapeBounds : Rectangle = readRectangle(input);
+            var textureTransform:TextureTransform = readTextureTransform(input);
+            var textureRegion:Rectangle = readRectangle(input);
+            var shapeBounds:Rectangle = readRectangle(input);
             
             //trace("read", input.position);
             
@@ -363,7 +366,7 @@ class SwfAtlasExporter
 				//}	
 				*/
             shapesList.addShape(null, new ShapeData(id, shapeBounds));
-            var texture : GenomeSubTexture = new GenomeSubTexture(id, textureRegion, textureTransform, textureAtlas.gTextureAtlas);
+            var texture:GenomeSubTexture = new GenomeSubTexture(id, textureRegion, textureTransform, textureAtlas.gTextureAtlas);
             
             textureAtlas.putTexture(texture);
         }  //input.bitsReader.clear();  
